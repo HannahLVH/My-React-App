@@ -1,36 +1,23 @@
-import React, {useState} from "react";
-
+import React from "react";
 import { greeting, user, albums } from "./data";
+import Search from "./components/Search";
+import Album from "./components/Album";
 
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState("")
-  const handleSearchTermChange = (e) => {
-    setSearchTerm(e.target.value)
-    console.log(searchTerm)
-  }
+  
+  const searchTermCallbackHandler = (e) => {
+    console.log("value :>>", e.target.value);
+  };
+
   return (
     <div className="App">
       <h1>
         {greeting} {user}
       </h1>
-      <div className="Search">
-        <label htmlFor="albumName">Album Name</label>
-        <input type="text" id="albumName" name="albumName"
-        onChange={handleSearchTermChange}/>
-      </div>
-        
-        {albums.map((album,index)=> (
-          <div key={index}>
-          <h2>{album.name}</h2>
-          <p>{album.artist.name}</p>
-          {album.tracks.map((track, trackIndex) => (
-          <ul key={trackIndex}>
-              <li>Track name: {track.name}</li>
-              <li>Track length: {track.length}</li>
-          </ul>
-          ))}
-          </div>
+        <Search searchTermCallbackHandler={searchTermCallbackHandler}/>
+        {albums.map((album)=> (
+        <Album album={album}/>
         ))}
     </div>
   );
